@@ -1,6 +1,5 @@
 import * as THREE from 'three';
 import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader';
-import {TrackballControls} from 'three/examples/jsm/controls/TrackballControls';
 import {VRM} from '@pixiv/three-vrm';
 
 var scene;
@@ -10,12 +9,12 @@ init();
 
 const loader = new GLTFLoader();
 loader.load(
-    '../../public/models/Maya.vrm',
+    '/models/Maya.vrm',
     (gltf) => {
-        VRM.from(gltf).then((VRM) => {
+        VRM.from(gltf).then((vrm) => {
             scene.add(vrm.scene);
             console.log(vrm);
-        });
+        })
     },
     (progress) => console.log('Loading model...', 100.0 * (progress.loaded / progress.total), '%'),
     (error) => console.error(error)
@@ -46,10 +45,14 @@ function init() {
     camera = new THREE.PerspectiveCamera(
         45, window.innerWidth/window.innerHeight, 0.1, 1000
     );
-    camera.position.set(0, 1.3, -1);
+    camera.position.set(1, 1.3, -5);
     camera.rotation.set(0, Math.PI, 0);
 
     light = new THREE.DirectionalLight(0xffffff);
     light.position.set(-1, 1, -1).normalize();
     scene.add(light);
+
+    var axix = new THREE.AxesHelper(20);
+    scene.add(axix);
+
 }
