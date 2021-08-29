@@ -1,0 +1,47 @@
+.articlesList {
+    display: flex;
+    flex-direction: column;
+    max-width: 1200px;
+    padding: 1rem;
+    margin: auto;
+}
+
+.articlesElement {
+    display: flex;
+    flex-direction: row;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-top: 0.1rem solid rgb(180, 180, 180);
+}
+
+.title {
+    display: block;
+    float: left;
+    margin-right: 1%;
+    width: 60%;
+}
+
+.category {
+    font-size: smaller;
+    color: darkgray;    
+    padding-left: 1em;
+}
+
+.region {
+    display: block;
+    float: left;
+    margin-right: 1%;
+}
+
+@media screen and (max-width: 900px) {
+    .region {
+        display: none;
+    }
+}
+
+.date {
+    display: block;
+    margin-left: auto;
+    padding-left: 1em;
+    text-align: right;
+}
