@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import {TrackballControls} from 'three/examples/jsm/controls/TrackballControls';
+import {OrbitControls, TrackballControls} from 'three/examples/jsm/controls/OrbitControls';
 import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader';
 import {VRM} from '@pixiv/three-vrm';
 
@@ -33,6 +33,13 @@ const VRMview = () => {
 
         createControls(camera, renderer);
 
+        const onResize = () => {
+            camera.aspect = window.innerWidth/window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+        window.addEventListener('resize', onResize, false);
+
         var clock = new THREE.Clock();
         const renderScene = () => {
             var delta = clock.getDelta();
@@ -40,6 +47,10 @@ const VRMview = () => {
             requestAnimationFrame(renderScene);
             renderer.render(scene, camera);
         }
+
+        camera.position.set(0.5, 1.4, -3);
+        camera.lookAt(new THREE.Vector3(0, 1.4, 0));
+        controls.update();
 
         renderScene();
     }
@@ -57,8 +68,6 @@ function init() {
     camera = new THREE.PerspectiveCamera(
         45, window.innerWidth/window.innerHeight, 0.1, 1000
     );
-    camera.position.set(0.5, 1.3, -3);
-    camera.rotation.set(0, Math.PI, 0);
 
     light = new THREE.DirectionalLight(0xffffff);
     light.position.set(-1, 1, -1).normalize();
@@ -70,11 +79,12 @@ function init() {
 }
 
 function createControls(camera, renderer) {
-    controls = new TrackballControls(camera, renderer.domElement);
+    controls = new OrbitControls(camera, renderer.domElement);
 
     controls.rotateSpeed = 1.0;
     controls.zoomSpeed = 1.0;
     controls.panSpeed = 0.6;
 
     controls.keys = ['KeyA', 'KeyS', 'KeyD']
+
 }
